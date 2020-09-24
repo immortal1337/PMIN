@@ -17,12 +17,14 @@ namespace WindowsFormsApp2
         Random rnd = new Random();
         int stepX = 0;
         int stepI = 0;
+        double x = -10000;
 
         public Form1()
         {
             InitializeComponent();
             timer1.Tick += button1_Click;
             timer2.Tick += Step;
+            chart1.ChartAreas[0].AxisY.ScaleView.Zoom(-6, 6);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,32 +43,39 @@ namespace WindowsFormsApp2
 
             chart1.Series[0].Points.Clear();
                 chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                double x = -10000 + stepI;
+                
             double f = 50;
             const int N = 10000;
             //1 часть    
+            int rnd_step = rnd.Next(0, 10);
             for (int i = 10; i < N; i=i+1000)
                 {
                 double value = rnd.Next(-500,500) ;
                 double y = Math.Cos(5 * i) * Math.Cos(f) + value/10000;
-                    chart1.Series[0].Points.AddXY(x, y);
-                    x = x + 10 + stepX; ;
+                chart1.Series[0].Points.AddXY(x, y);
+                x = x + 10 + stepX; ;
                 }
             for (int i = 10; i < N+ 10; i = i + 100)
             {
                 double value = rnd.Next(-500, 500);
                 double y = Math.Cos(5 * i) * Math.Cos(f) + value / 10000;
-                chart1.Series[0].Points.AddXY(x, y);
+
+                if (rnd_step == 3)
+                {
+                    for (int j = 10; j < N + 100; j += 250)
+                    {
+                        double value_A = rnd.Next(-100, 100);
+                        double y_A = Math.Cos(5 * j + 6) * Math.Cos(f) + value_A / 10000;
+                        chart1.Series[0].Points.AddXY(x, y_A + 5);
+                        x = x + 5 + stepX; ;
+                    }
+                    rnd_step = rnd.Next(0, 10);
+                }
+                else chart1.Series[0].Points.AddXY(x, y);
                 x = x + 50 + stepX; ;
             }
             // середина
-            for (int i = 10; i < N + 100; i = i + 250)
-            {
-                double value = rnd.Next(-100, 100);
-                double y = Math.Cos(5 * i+6 ) * Math.Cos(f) + value / 10000;
-                chart1.Series[0].Points.AddXY(x, y + 5);
-                x = x + 5 + stepX; ;
-            }
+
             for (int i = 10; i < N+ 10; i = i + 100)
             {
                 double value = rnd.Next(-100, 1000);
@@ -82,6 +91,11 @@ namespace WindowsFormsApp2
                 chart1.Series[0].Points.AddXY(x, y);
                 x += 100 + stepX; ;
             }
+
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
 
         }
     }
