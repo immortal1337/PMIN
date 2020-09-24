@@ -17,7 +17,6 @@ namespace WindowsFormsApp2
         Random rnd = new Random();
         int stepX = 0;
         int stepI = 0;
-        string auf = "Авдой сасная тёлочка";
 
         public Form1()
         {
