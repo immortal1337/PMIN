@@ -71,8 +71,10 @@ namespace WindowsFormsApp2
                         int randx = rnd.Next(-5000, 0);
                         for(int i = randx; i < randx+100; i+=50)
                         {
-                            chart1.Series[0].Points.AddXY(randx, y + 3); // надо додумать рандомное появление красивой синусоиды в промежутке с -5000 до 0 
-                            
+                        for (int h = 0; h < 60; h += 10)
+                        {
+                            chart1.Series[0].Points.AddXY(x = x + h, rnd.Next((int)y, (int)y +5)); // надо додумать рандомное появление красивой синусоиды в промежутке с -5000 до 0 
+                        }
                         }
 
                     rnd_step = rnd.Next(1, 4);
